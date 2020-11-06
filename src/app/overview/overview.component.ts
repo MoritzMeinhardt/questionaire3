@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { QuestionProviderService } from "../services/question-provider.service";
-import { Question } from "../models/question";
+import { QuestionAndAnswers } from "../models/questionAndAnswers";
 import { UserResultOfQuestion } from "../models/userResultOfQuestion";
 import { Answer } from "../models/answer";
 
@@ -12,7 +12,7 @@ import { Answer } from "../models/answer";
 export class OverviewComponent implements OnInit {
 
   viewResult: boolean = false;
-  questions: Question[];
+  questions: QuestionAndAnswers[];
   result: UserResultOfQuestion[] = [];
 
   constructor(private questionProvider: QuestionProviderService) { }
@@ -21,7 +21,7 @@ export class OverviewComponent implements OnInit {
     this.questions = this.questionProvider.getQuestions();
   }
 
-  onUserFeedback(answer: Answer, question: Question) {
+  onUserFeedback(answer: Answer, question: QuestionAndAnswers) {
     let userResult = new UserResultOfQuestion();
     userResult.question = question;
     userResult.userAnswer = answer;

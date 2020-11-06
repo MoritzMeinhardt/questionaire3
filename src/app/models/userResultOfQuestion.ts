@@ -1,7 +1,7 @@
 import { Answer } from "./answer";
-import { Question } from "./question";
+import { QuestionAndAnswers } from "./questionAndAnswers";
 
 export class UserResultOfQuestion {
-  question: Question;
+  question: QuestionAndAnswers;
   userAnswer: Answer;
 }

@@ -1,55 +1,77 @@
-import { Injectable } from '@angular/core';
-import { questions} from "../../assets/question-data";
-import { Question } from "../models/question";
-import { Answer } from "../models/answer";
+import {Injectable} from '@angular/core';
+import {QUESTIONS} from '../../assets/question-data';
+import {QuestionAndAnswers} from '../models/questionAndAnswers';
+import {Answer} from '../models/answer';
+import {DEFAULT_ANSWER} from '../constants/question.constant';
 
 @Injectable({
-  providedIn: 'root'
+    providedIn: 'root'
 })
 export class QuestionProviderService {
 
-  defaultAnswer: Answer = new Answer();
+    readonly QUESTION_SELECTOR = '?';
+    readonly CORRECT_ANSWER_SELECTOR = '*';
 
-  constructor() {
-    this.defaultAnswer.text = 'I don\'t know';
-    this.defaultAnswer.isCorrect = false;
-  }
-
-  getQuestions(): Question[] {
-    const splittedText = this.splitTextIntoLines(questions);
-    return this.createQuestions(splittedText);
-  }
-
-  splitTextIntoLines(text: string): string[] {
-    return text.split(/\r?\n/);
-  }
-
-  createQuestions(splittedText) {
-    let questions: Question [] = [];
-    let question: Question = null;
-    splittedText.forEach(lineOfText => {
-      if(lineOfText.startsWith('?')){
-        if (question) {
-          question.answers.push(this.defaultAnswer);
-          questions.push(question);
-          question = null;
-        }
-        question = new Question();
-        question.text = lineOfText.substring(1);
-      } else {
-        let answer: Answer = new Answer();
-        if(lineOfText.startsWith('*')) {
-          answer.isCorrect = true;
-          lineOfText = lineOfText.substring(1);
-        }
-        answer.text = lineOfText;
-        question.answers.push(answer);
-      }
-    });
-    if (question) {
-      question.answers.push(this.defaultAnswer);
-      questions.push(question);
+    getQuestions(): QuestionAndAnswers[] {
+        const splittedText: string[] = this.splitTextIntoLines(QUESTIONS);
+        const questionAndAnswerBlocks: string [][] = this.getQuestionAndAnswerBlocks(splittedText);
+        return this.createQuestions(splittedText);
     }
-    return questions;
-  }
+
+    private createQuestions(splittedText) {
+        const questionnaire: QuestionAndAnswers [] = [];
+        let question: QuestionAndAnswers = null;
+        splittedText.forEach(lineOfText => {
+            if (this.isLineOfTextQuestion(lineOfText)) {
+                if (question) {
+                    question.answers.push(DEFAULT_ANSWER);
+                    questionnaire.push(question);
+                    question = null;
+                }
+                question = new QuestionAndAnswers();
+                question.text = lineOfText.substring(1);
+            } else {
+                const answer: Answer = new Answer();
+                if (this.isLineOfTextCorrectAnswer(lineOfText)) {
+                    answer.isCorrect = true;
+                    lineOfText = lineOfText.substring(1);
+                }
+                answer.text = lineOfText;
+                question.answers.push(answer);
+            }
+        });
+        if (question) {
+            question.answers.push(DEFAULT_ANSWER);
+            questionnaire.push(question);
+        }
+        return questionnaire;
+    }
+
+    private splitTextIntoLines(text: string): string[] {
+        return text.split(/\r?\n/);
+    }
+
+    private getQuestionAndAnswerBlocks(splittedText: string[]): string[][] {
+        const questionAndAnswerBlocks: string[][] = [];
+        let currentQuestionNumber = -1;
+        splittedText.forEach(lineOfText => {
+            if (this.isLineOfTextQuestion(lineOfText)) {
+                currentQuestionNumber++;
+            }
+            questionAndAnswerBlocks[currentQuestionNumber].push(lineOfText);
+        });
+        return questionAndAnswerBlocks;
+    }
+
+    private isLineOfTextQuestion(lineOfText: string): boolean {
+        return this.doesLineStartWithCharacter(lineOfText, this.QUESTION_SELECTOR);
+    }
+
+    private isLineOfTextCorrectAnswer(lineOfText: string): boolean {
+        return this.doesLineStartWithCharacter(lineOfText, this.CORRECT_ANSWER_SELECTOR);
+    }
+
+    private doesLineStartWithCharacter(lineOfText: string, dividingCharacter: string) {
+        return lineOfText.startsWith(dividingCharacter);
+    }
 }

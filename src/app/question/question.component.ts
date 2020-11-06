@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { Question } from "../models/question";
+import { QuestionAndAnswers } from "../models/questionAndAnswers";
 import { Answer } from "../models/answer";
 
 @Component({
@@ -9,7 +9,7 @@ import { Answer } from "../models/answer";
 })
 export class QuestionComponent implements OnInit {
 
-  @Input() question: Question;
+  @Input() question: QuestionAndAnswers;
   @Output() answerGiven: EventEmitter<Answer> = new EventEmitter();
 
   constructor() { }
