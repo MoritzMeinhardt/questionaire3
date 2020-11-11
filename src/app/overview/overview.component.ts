@@ -15,7 +15,9 @@ export class OverviewComponent implements OnInit {
     questions: QuestionAndAnswers[];
     result: UserResultOfQuestion[] = [];
 
-    constructor(private questionProvider: QuestionProviderService) {
+    constructor(
+        private questionProvider: QuestionProviderService
+    ) {
     }
 
     ngOnInit() {
@@ -23,12 +25,29 @@ export class OverviewComponent implements OnInit {
     }
 
     onUserFeedback(answer: Answer, question: QuestionAndAnswers) {
-        const userResult = new UserResultOfQuestion(question, answer);
-        const alreadyAnsweredQuestion = this.result.find(entry => entry.question === question);
+        const userResult: UserResultOfQuestion = this.createNewUserResultOfQuestion(answer, question);
+        const alreadyAnsweredQuestion: boolean = this.isQuestionAlreadyAnswered(question);
         if (alreadyAnsweredQuestion) {
-            this.result.splice(this.result.findIndex(entry => entry.question === question), 1);
+            const questionIndex = this.getQuestionIndex(question);
+            this.removeAlreadyAnsweredQuestion(questionIndex);
         }
         this.result.push(userResult);
+    }
+
+    private createNewUserResultOfQuestion(answer: Answer, question: QuestionAndAnswers) {
+        return new UserResultOfQuestion(question, answer);
+    }
+
+    private getQuestionIndex(question: QuestionAndAnswers): number {
+        return this.result.findIndex(entry => entry.question === question);
+    }
+
+    private isQuestionAlreadyAnswered(question: QuestionAndAnswers): boolean {
+        return this.result.find(entry => entry.question === question) !== null;
+    }
+
+    private removeAlreadyAnsweredQuestion(questionIndex: number) {
+        this.result.splice(questionIndex, 1);
     }
 
     submit() {
