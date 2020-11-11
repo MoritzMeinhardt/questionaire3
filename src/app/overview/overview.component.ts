@@ -13,7 +13,7 @@ export class OverviewComponent implements OnInit {
 
     viewResult = false;
     questions: QuestionAndAnswers[];
-    result: UserResultOfQuestion[] = [];
+    userResults: UserResultOfQuestion[] = [];
 
     constructor(
         private questionProvider: QuestionProviderService
@@ -31,7 +31,7 @@ export class OverviewComponent implements OnInit {
             const questionIndex = this.getQuestionIndex(question);
             this.removeAlreadyAnsweredQuestion(questionIndex);
         }
-        this.result.push(userResult);
+        this.userResults.push(userResult);
     }
 
     private createNewUserResultOfQuestion(answer: Answer, question: QuestionAndAnswers) {
@@ -39,18 +39,19 @@ export class OverviewComponent implements OnInit {
     }
 
     private getQuestionIndex(question: QuestionAndAnswers): number {
-        return this.result.findIndex(entry => entry.question === question);
+        return this.userResults.findIndex(entry => entry.question === question);
     }
 
     private isQuestionAlreadyAnswered(question: QuestionAndAnswers): boolean {
-        return this.result.find(entry => entry.question === question) !== null;
+        return this.userResults.find(entry => entry.question === question) !== null;
     }
 
     private removeAlreadyAnsweredQuestion(questionIndex: number) {
-        this.result.splice(questionIndex, 1);
+        this.userResults.splice(questionIndex, 1);
     }
 
     submit() {
         this.viewResult = !this.viewResult;
     }
+
 }

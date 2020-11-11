@@ -1,5 +1,7 @@
-<p *ngIf="result.length > 0">{{numberOfCorrectAnswers}} out of {{ result.length }} questions answered correctly ({{numberOfCorrectAnswers / result.length | percent}})</p>
-<div *ngFor="let resultOfQuestion of result">
+<p *ngIf="userResults.length > 0">{{score}} out of {{ userResults.length }} questions answered correctly ({{score /
+    userResults.length
+    | percent}})</p>
+<div *ngFor="let resultOfQuestion of userResults">
   <div>
     <p style="font-weight: bold;">{{resultOfQuestion.question.text}}</p>
     <p *ngIf="resultOfQuestion.userAnswer.isCorrect" style="color: green;">Your answer '{{resultOfQuestion.userAnswer.text}}' is correct</p>

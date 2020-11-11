@@ -1,8 +1,8 @@
-import {Injectable} from '@angular/core';
-import {QUESTIONS} from '../../assets/question-data';
-import {QuestionAndAnswers} from '../models/questionAndAnswers';
-import {Answer} from '../models/answer';
-import {DEFAULT_ANSWER} from '../constants/question.constant';
+import { Injectable } from '@angular/core';
+import { QUESTIONS } from '../../assets/question-data';
+import { QuestionAndAnswers } from '../models/questionAndAnswers';
+import { Answer } from '../models/answer';
+import { DEFAULT_ANSWER } from '../constants/question.constant';
 
 @Injectable({
     providedIn: 'root'
@@ -32,7 +32,7 @@ export class QuestionProviderService {
                 questionAndAnswerBlocks.push([]);
                 currentQuestionNumber++;
             }
-            questionAndAnswerBlocks[currentQuestionNumber].push(lineOfText);
+            questionAndAnswerBlocks[ currentQuestionNumber ].push(lineOfText);
         });
         return questionAndAnswerBlocks;
     }
@@ -49,9 +49,9 @@ export class QuestionProviderService {
     private getQuestionAndAnswersFromStringBlock(qAndABlock: string[]): QuestionAndAnswers {
         const questionAndAnswers: QuestionAndAnswers = this.createQandA();
         this.getAndSetQuestion(questionAndAnswers, qAndABlock);
-        this.addDefaultAnswer(questionAndAnswers);
         this.getAndSetCorrectAnswers(questionAndAnswers, qAndABlock);
         this.getAndSetAlternativeAnswers(questionAndAnswers, qAndABlock);
+        this.addDefaultAnswer(questionAndAnswers);
         return questionAndAnswers;
     }
 
@@ -79,12 +79,12 @@ export class QuestionProviderService {
     }
 
     private getQuestion(questionAndAnswerBlock: string []): string {
-        const questionTextBlock = questionAndAnswerBlock.filter(entry => entry.startsWith(this.QUESTION_SELECTOR))[0];
+        const questionTextBlock = questionAndAnswerBlock.filter(entry => entry.startsWith(this.QUESTION_SELECTOR))[ 0 ];
         return this.getSubString(questionTextBlock, this.NUMBER_OF_QUESTION_SELECTORS);
     }
 
     private getCorrectAnswer(questionAndAnswerBlock: string []): Answer {
-        const correctAnswerTextBlock = questionAndAnswerBlock.filter(entry => entry.startsWith(this.CORRECT_ANSWER_SELECTOR))[0];
+        const correctAnswerTextBlock = questionAndAnswerBlock.filter(entry => entry.startsWith(this.CORRECT_ANSWER_SELECTOR))[ 0 ];
         const answerText = this.getSubString(correctAnswerTextBlock, this.NUMBER_OF_CORRECT_ANSWER_SELECTORS);
         return this.createCorrectAnswer(answerText);
     }

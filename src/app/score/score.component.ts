@@ -1,6 +1,6 @@
-import {Component, Input, OnInit} from '@angular/core';
-import {UserResultOfQuestion} from '../models/userResultOfQuestion';
-import {Answer} from '../models/answer';
+import { Component, Input, OnInit } from '@angular/core';
+import { UserResultOfQuestion } from '../models/userResultOfQuestion';
+import { Answer } from '../models/answer';
 
 @Component({
     selector: 'app-score',
@@ -9,18 +9,18 @@ import {Answer} from '../models/answer';
 })
 export class ScoreComponent implements OnInit {
 
-    @Input() result: UserResultOfQuestion[];
-    numberOfCorrectAnswers = 0;
+    @Input() userResults: UserResultOfQuestion[];
+    public score = 0;
 
     constructor() {
     }
 
     ngOnInit() {
-        this.result.forEach(entry => {
-            if (entry.userAnswer.isCorrect) {
-                this.numberOfCorrectAnswers++;
-            }
-        });
+        this.score = this.countCorrectAnswers(this.userResults);
+    }
+
+    private countCorrectAnswers(userResults: UserResultOfQuestion[]): number {
+        return userResults.filter(entry => entry.userAnswer.isCorrect).length;
     }
 
     returnCorrectAnswer(answers: Answer[]) {

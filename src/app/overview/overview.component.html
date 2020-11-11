@@ -6,7 +6,7 @@
 </div>
 
 <div *ngIf="viewResult">
-  <app-score [result]="result"></app-score>
+  <app-score [userResults]="userResults"></app-score>
 </div>
 
 <button *ngIf="!viewResult" (click)="submit()" style="margin-top: 40px;">Show my Score...</button>
