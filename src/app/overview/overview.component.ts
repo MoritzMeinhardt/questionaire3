@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {QuestionProviderService} from '../services/question-provider.service';
 import {QuestionAndAnswers} from '../models/questionAndAnswers';
-import {UserResultOfQuestion} from '../models/userResultOfQuestion';
+import {UserResult} from '../models/userResult';
 import {Answer} from '../models/answer';
 
 @Component({
@@ -13,7 +13,7 @@ export class OverviewComponent implements OnInit {
 
     viewResult = false;
     questions: QuestionAndAnswers[];
-    userResults: UserResultOfQuestion[] = [];
+    userResults: UserResult[] = [];
 
     constructor(
         private questionProvider: QuestionProviderService
@@ -24,7 +24,7 @@ export class OverviewComponent implements OnInit {
     }
 
     onUserFeedback(answer: Answer, question: QuestionAndAnswers) {
-        const userResult: UserResultOfQuestion = this.createNewUserResultOfQuestion(answer, question);
+        const userResult: UserResult = this.createNewUserResultOfQuestion(answer, question);
         const alreadyAnsweredQuestion: boolean = this.isQuestionAlreadyAnswered(question);
         if (alreadyAnsweredQuestion) {
             const questionIndex = this.getQuestionIndex(question);
@@ -34,7 +34,7 @@ export class OverviewComponent implements OnInit {
     }
 
     private createNewUserResultOfQuestion(answer: Answer, question: QuestionAndAnswers) {
-        return new UserResultOfQuestion(question, answer);
+        return new UserResult(question, answer);
     }
 
     private getQuestionIndex(question: QuestionAndAnswers): number {

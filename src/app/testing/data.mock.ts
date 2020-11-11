@@ -1,6 +1,6 @@
 import {QuestionAndAnswers} from '../models/questionAndAnswers';
 import {DEFAULT_ANSWER} from '../constants/question.constant';
-import {UserResultOfQuestion} from '../models/userResultOfQuestion';
+import {UserResult} from '../models/userResult';
 
 export class DataMock {
     static getQuestionAndAnswers(): QuestionAndAnswers[] {
@@ -44,7 +44,7 @@ export class DataMock {
         ];
     }
 
-    static getUserResultOfQuestion(): UserResultOfQuestion[] {
+    static getUserResultOfQuestion(): UserResult[] {
         return [
             {
                 questionAndAnswers: this.getQuestionAndAnswers()[0],

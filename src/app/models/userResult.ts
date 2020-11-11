@@ -1,7 +1,7 @@
 import {Answer} from './answer';
 import {QuestionAndAnswers} from './questionAndAnswers';
 
-export class UserResultOfQuestion {
+export class UserResult {
     questionAndAnswers: QuestionAndAnswers;
     userAnswers: Answer[];
 
