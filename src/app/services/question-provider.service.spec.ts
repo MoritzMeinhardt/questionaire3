@@ -9,7 +9,7 @@ describe('QuestionProviderService', () => {
     beforeEach(() => TestBed.configureTestingModule({}));
 
     beforeEach(() => {
-       questionProviderService = TestBed.get(QuestionProviderService) ;
+        questionProviderService = TestBed.get(QuestionProviderService);
     });
 
     it('should create correct QUESTIONS', () => {
@@ -25,41 +25,49 @@ describe('QuestionProviderService', () => {
 
 function getExpectedQuestionAndAnswers(): QuestionAndAnswers[] {
     return [
-        {
-            text: 'Which of these animals is a mammal?',
-            answers: [
-                {
-                    text: 'Ant',
-                    isCorrect: false,
-                },
-                {
-                    text: 'Bee',
-                    isCorrect: false,
-                },
-                {
-                    text: 'Cat',
-                    isCorrect: true,
-                },
-                DEFAULT_ANSWER
-            ],
-        },
-        {
-            text: 'What is the sum of 2+3?',
-            answers: [
-                {
-                    text: '2',
-                    isCorrect: false,
-                },
-                {
-                    text: '5',
-                    isCorrect: true,
-                },
-                {
-                    text: '6',
-                    isCorrect: false,
-                },
-                DEFAULT_ANSWER
-            ],
-        },
+        getFirstQuestionAndAnswer(),
+        getSecondQuestionAndAnswer(),
     ];
+}
+
+function getFirstQuestionAndAnswer(): QuestionAndAnswers {
+    return {
+        answers: [
+            {
+                text: 'Cat',
+                isCorrect: true,
+            },
+            {
+                text: 'Ant',
+                isCorrect: false,
+            },
+            {
+                text: 'Bee',
+                isCorrect: false,
+            },
+            DEFAULT_ANSWER
+        ],
+        text: 'Which of these animals is a mammal?',
+    };
+}
+
+function getSecondQuestionAndAnswer(): QuestionAndAnswers {
+    return {
+        answers: [
+            {
+                text: '5',
+                isCorrect: true,
+            },
+            {
+                text: '2',
+                isCorrect: false,
+            },
+            {
+                text: '6',
+                isCorrect: false,
+            },
+            DEFAULT_ANSWER
+        ],
+        text: 'What is the sum of 2+3?',
+    };
 }
