@@ -13,6 +13,7 @@ export class QuestionProviderService {
     readonly CORRECT_ANSWER_SELECTOR = '*';
     readonly NUMBER_OF_QUESTION_SELECTORS = 1;
     readonly NUMBER_OF_CORRECT_ANSWER_SELECTORS = 1;
+    readonly NUMBER_OF_QUESTIONS_IN_ARRAY = 1;
 
     getQuestions(): QuestionAndAnswers[] {
         const splittedText: string[] = this.splitTextIntoLines(QUESTIONS);
@@ -32,9 +33,17 @@ export class QuestionProviderService {
                 questionAndAnswerBlocks.push([]);
                 currentQuestionNumber++;
             }
-            questionAndAnswerBlocks[ currentQuestionNumber ].push(lineOfText);
+            questionAndAnswerBlocks[currentQuestionNumber].push(lineOfText);
         });
         return questionAndAnswerBlocks;
+    }
+
+    private isLineOfTextQuestion(lineOfText: string): boolean {
+        return this.doesLineStartWithCharacter(lineOfText, this.QUESTION_SELECTOR);
+    }
+
+    private doesLineStartWithCharacter(lineOfText: string, dividingCharacter: string) {
+        return lineOfText.startsWith(dividingCharacter);
     }
 
     private getQuestionnaire(questionAndAnswerBlocks: string [][]): QuestionAndAnswers[] {
@@ -49,9 +58,9 @@ export class QuestionProviderService {
     private getQuestionAndAnswersFromStringBlock(qAndABlock: string[]): QuestionAndAnswers {
         const questionAndAnswers: QuestionAndAnswers = this.createQandA();
         this.getAndSetQuestion(questionAndAnswers, qAndABlock);
-        this.getAndSetCorrectAnswers(questionAndAnswers, qAndABlock);
         this.getAndSetAlternativeAnswers(questionAndAnswers, qAndABlock);
         this.addDefaultAnswer(questionAndAnswers);
+        this.getAndSetCorrectAnswers(questionAndAnswers, qAndABlock);
         return questionAndAnswers;
     }
 
@@ -64,23 +73,19 @@ export class QuestionProviderService {
         this.setQuestionText(currentQuestionAndAnswers, questionText);
     }
 
-    private addDefaultAnswer(currentQuestionAndAnswers: QuestionAndAnswers) {
-        currentQuestionAndAnswers.answers.push(DEFAULT_ANSWER);
+    private getQuestion(questionAndAnswerBlock: string []): string {
+        const questionTextBlock = questionAndAnswerBlock.filter(entry => entry.startsWith(this.QUESTION_SELECTOR))[ 0 ];
+        return this.getSubString(questionTextBlock, this.NUMBER_OF_QUESTION_SELECTORS);
+    }
+
+    private setQuestionText(currentQuestionAndAnswers: QuestionAndAnswers, questionText: string) {
+        currentQuestionAndAnswers.text = questionText + '?';
     }
 
     private getAndSetCorrectAnswers(currentQuestionAndAnswers: QuestionAndAnswers, qAndABlock: string []) {
         const correctAnswer = this.getCorrectAnswer(qAndABlock);
-        currentQuestionAndAnswers.answers.push(correctAnswer);
-    }
-
-    private getAndSetAlternativeAnswers(currentQuestionAndAnswers: QuestionAndAnswers, qAndABlock: string []) {
-        const alternativeAnswers: Answer[] = this.getAlternativeAnswers(qAndABlock);
-        currentQuestionAndAnswers.answers.push(...alternativeAnswers);
-    }
-
-    private getQuestion(questionAndAnswerBlock: string []): string {
-        const questionTextBlock = questionAndAnswerBlock.filter(entry => entry.startsWith(this.QUESTION_SELECTOR))[ 0 ];
-        return this.getSubString(questionTextBlock, this.NUMBER_OF_QUESTION_SELECTORS);
+        const insertionIndex = this.getCorrectAnswerIndex(qAndABlock);
+        currentQuestionAndAnswers.answers.splice(insertionIndex, 0, correctAnswer);
     }
 
     private getCorrectAnswer(questionAndAnswerBlock: string []): Answer {
@@ -89,10 +94,20 @@ export class QuestionProviderService {
         return this.createCorrectAnswer(answerText);
     }
 
+    private getCorrectAnswerIndex(questionAndAnswerBlock: string []): number {
+        return questionAndAnswerBlock.findIndex(entry => entry.startsWith(this.CORRECT_ANSWER_SELECTOR))
+            - this.NUMBER_OF_QUESTIONS_IN_ARRAY;
+    }
+
     private createCorrectAnswer(answerText: string) {
         const correctAnswer: Answer = new Answer(answerText);
         correctAnswer.isCorrect = true;
         return correctAnswer;
+    }
+
+    private getAndSetAlternativeAnswers(currentQuestionAndAnswers: QuestionAndAnswers, qAndABlock: string []) {
+        const alternativeAnswers: Answer[] = this.getAlternativeAnswers(qAndABlock);
+        currentQuestionAndAnswers.answers.push(...alternativeAnswers);
     }
 
     private getAlternativeAnswers(questionAndAnswerBlock: string []): Answer[] {
@@ -106,19 +121,11 @@ export class QuestionProviderService {
         return alternativeAnswers;
     }
 
+    private addDefaultAnswer(currentQuestionAndAnswers: QuestionAndAnswers) {
+        currentQuestionAndAnswers.answers.push(DEFAULT_ANSWER);
+    }
+
     private getSubString(textBlock: string, index: number) {
         return textBlock.substring(index);
-    }
-
-    private setQuestionText(currentQuestionAndAnswers: QuestionAndAnswers, questionText: string) {
-        currentQuestionAndAnswers.text = questionText + '?';
-    }
-
-    private isLineOfTextQuestion(lineOfText: string): boolean {
-        return this.doesLineStartWithCharacter(lineOfText, this.QUESTION_SELECTOR);
-    }
-
-    private doesLineStartWithCharacter(lineOfText: string, dividingCharacter: string) {
-        return lineOfText.startsWith(dividingCharacter);
     }
 }
