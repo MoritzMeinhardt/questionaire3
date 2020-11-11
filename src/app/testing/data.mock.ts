@@ -1,6 +1,5 @@
-import {QuestionAndAnswers} from '../models/questionAndAnswers';
-import {DEFAULT_ANSWER} from '../constants/question.constant';
-import {UserResult} from '../models/userResult';
+import { QuestionAndAnswers } from '../models/questionAndAnswers';
+import { DEFAULT_ANSWER } from '../constants/question.constant';
 
 export class DataMock {
     static getQuestionAndAnswers(): QuestionAndAnswers[] {
@@ -10,14 +9,17 @@ export class DataMock {
                     {
                         text: 'Ant',
                         isCorrect: false,
+                        checkedByUser: null,
                     },
                     {
                         text: 'Bee',
                         isCorrect: false,
+                        checkedByUser: null,
                     },
                     {
                         text: 'Cat',
                         isCorrect: true,
+                        checkedByUser: null,
                     },
                     DEFAULT_ANSWER
                 ],
@@ -28,38 +30,99 @@ export class DataMock {
                     {
                         text: '2',
                         isCorrect: false,
+                        checkedByUser: null,
                     },
                     {
                         text: '5',
                         isCorrect: true,
+                        checkedByUser: null,
                     },
                     {
                         text: '6',
                         isCorrect: false,
+                        checkedByUser: null,
                     },
                     DEFAULT_ANSWER
                 ],
                 text: 'What is the sum of 2+3?',
             },
+            {
+                answers: [
+                    {
+                        text: 'more',
+                        isCorrect: true,
+                        checkedByUser: null,
+                    },
+                    {
+                        text: 'than',
+                        isCorrect: true,
+                        checkedByUser: null,
+                    },
+                    {
+                        text: 'you',
+                        isCorrect: true,
+                        checkedByUser: null,
+                    },
+                    DEFAULT_ANSWER
+                ],
+                text: 'What is multiple possible?',
+            },
         ];
     }
 
-    static getUserResultOfQuestion(): UserResult[] {
+    static getUserResultOfQuestionAllAnsweredCorrectly(): QuestionAndAnswers[] {
         return [
             {
-                questionAndAnswers: this.getQuestionAndAnswers()[0],
-                userAnswers: {
-                    text: 'Cat',
-                    isCorrect: true,
-                }
+                ...this.getQuestionAndAnswers()[ 0 ],
+                answers: [
+                    ...this.getQuestionAndAnswers()[ 0 ].answers.map(answer => {
+                        answer.isCorrect ? answer.checkedByUser = true : answer.checkedByUser = null;
+                        return answer;
+                    })
+                ]
             },
             {
-                questionAndAnswers: this.getQuestionAndAnswers()[1],
-                userAnswers: {
-                    text: '5',
-                    isCorrect: true,
-                },
+                ...this.getQuestionAndAnswers()[ 1 ],
+                answers: [
+                    ...this.getQuestionAndAnswers()[ 1 ].answers.map(answer => {
+                        answer.isCorrect ? answer.checkedByUser = true : answer.checkedByUser = null;
+                        return answer;
+                    })
+                ]
+            },
+            {
+                ...this.getQuestionAndAnswers()[ 2 ],
+                answers: [
+                    ...this.getQuestionAndAnswers()[ 2 ].answers.map(answer => {
+                        answer.isCorrect ? answer.checkedByUser = true : answer.checkedByUser = null;
+                        return answer;
+                    })
+                ]
             }
+        ];
+    }
+
+    static getUserResultOfQuestionAllAnsweredFalse(): QuestionAndAnswers[] {
+        return [
+            {
+                ...this.getQuestionAndAnswers()[ 0 ],
+                answers: [
+                    ...this.getQuestionAndAnswers()[ 0 ].answers.map(answer => {
+                        answer.isCorrect ? answer.checkedByUser = false : answer.checkedByUser = null;
+                        return answer;
+                    })
+                ]
+            },
+            {
+                ...this.getQuestionAndAnswers()[ 1 ],
+                answers: [
+                    ...this.getQuestionAndAnswers()[ 1 ].answers.map(answer => {
+                        !answer.isCorrect ? answer.checkedByUser = true : answer.checkedByUser = null;
+                        return answer;
+                    })
+                ]
+            },
+            this.getQuestionAndAnswers()[ 2 ],
         ];
     }
 }

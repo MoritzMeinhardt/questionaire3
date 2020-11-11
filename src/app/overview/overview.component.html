@@ -6,7 +6,10 @@
 </div>
 
 <div *ngIf="showScore">
-  <app-score [score]="score"></app-score>
+    <app-score
+        [score]="score"
+        [userResults]="userResults"
+    ></app-score>
 </div>
 
 

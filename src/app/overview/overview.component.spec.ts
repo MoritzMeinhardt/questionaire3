@@ -1,7 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { OverviewComponent } from './overview.component';
 import { QuestionProviderService } from '../services/question-provider.service';
-import { QuestionComponent } from '../question/question.component';
 import { ScoreComponent } from './score/score.component';
 import { DataMock } from '../testing/data.mock';
 import { UserResult } from '../models/userResult';
@@ -17,7 +16,6 @@ describe('Component: OverviewComponent', () => {
     beforeEach(() => TestBed.configureTestingModule({
             declarations: [
                 OverviewComponent,
-                QuestionComponent,
                 ScoreComponent,
             ],
             providers: [
@@ -45,31 +43,31 @@ describe('Component: OverviewComponent', () => {
 
     describe('onUserFeedback()', () => {
         it('should update userResults correctly when user answered first question', () => {
-            const expectedUserResult: UserResult[] = [DataMock.getUserResultOfQuestion()[0]];
-            const answer: Answer = DataMock.getUserResultOfQuestion()[0].userAnswers;
-            const questionAndAnswers: QuestionAndAnswers = DataMock.getUserResultOfQuestion()[0].questionAndAnswers;
+            const expectedUserResult: UserResult[] = [DataMock.getUserResultOfQuestionAllAnsweredCorrectly()[0]];
+            const answer: Answer = DataMock.getUserResultOfQuestionAllAnsweredCorrectly()[0].userAnswers[0];
+            const questionAndAnswers: QuestionAndAnswers = DataMock.getUserResultOfQuestionAllAnsweredCorrectly()[0].questionAndAnswers;
             overviewComponent.onUserFeedback(answer, questionAndAnswers);
             fixture.detectChanges();
             expect(JSON.stringify(overviewComponent.userResults)).toEqual(JSON.stringify(expectedUserResult));
         });
 
         it('should update userResults correctly when user answered second question', () => {
-            overviewComponent.userResults.push(DataMock.getUserResultOfQuestion()[0]);
-            const expectedUserResult: UserResult[] = DataMock.getUserResultOfQuestion();
-            const answer: Answer = DataMock.getUserResultOfQuestion()[1].userAnswers;
-            const questionAndAnswers: QuestionAndAnswers = DataMock.getUserResultOfQuestion()[1].questionAndAnswers;
+            overviewComponent.userResults.push(DataMock.getUserResultOfQuestionAllAnsweredCorrectly()[0]);
+            const expectedUserResult: UserResult[] = DataMock.getUserResultOfQuestionAllAnsweredCorrectly();
+            const answer: Answer = DataMock.getUserResultOfQuestionAllAnsweredCorrectly()[1].userAnswers[0];
+            const questionAndAnswers: QuestionAndAnswers = DataMock.getUserResultOfQuestionAllAnsweredCorrectly()[1].questionAndAnswers;
             overviewComponent.onUserFeedback(answer, questionAndAnswers);
             fixture.detectChanges();
             expect(JSON.stringify(overviewComponent.userResults)).toEqual(JSON.stringify(expectedUserResult));
         });
 
         it('should update userResults correctly when user answered second question twice', () => {
-            overviewComponent.userResults.push(...DataMock.getUserResultOfQuestion());
-            const expectedUserResult: UserResult[] = DataMock.getUserResultOfQuestion();
-            expectedUserResult[1].userAnswers = getCatAnswer();
+            overviewComponent.userResults.push(...DataMock.getUserResultOfQuestionAllAnsweredCorrectly());
+            const expectedUserResult: UserResult[] = DataMock.getUserResultOfQuestionAllAnsweredCorrectly();
+            expectedUserResult[1].userAnswers = [{...getCatAnswer(), checkedByUser: true}];
             fixture.detectChanges();
             const answer: Answer = getCatAnswer();
-            const questionAndAnswers: QuestionAndAnswers = DataMock.getUserResultOfQuestion()[1].questionAndAnswers;
+            const questionAndAnswers: QuestionAndAnswers = DataMock.getUserResultOfQuestionAllAnsweredCorrectly()[1].questionAndAnswers;
             overviewComponent.onUserFeedback(answer, questionAndAnswers);
             fixture.detectChanges();
             expect(JSON.stringify(overviewComponent.userResults)).toEqual(JSON.stringify(expectedUserResult));

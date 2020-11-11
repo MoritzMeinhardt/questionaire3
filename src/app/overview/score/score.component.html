@@ -1,15 +1,16 @@
-<p *ngIf="userResults.length > 0">{{score}} out of {{ userResults.length }} questions answered correctly ({{score /
-userResults.length
-    | percent}})</p>
-<div *ngFor="let resultOfQuestion of userResults">
-    <div>
-        <p style="font-weight: bold;">{{resultOfQuestion.questionAndAnswers.text}}</p>
-        <p *ngIf="resultOfQuestion.userAnswers.isCorrect" style="color: green;">Your answer
-            '{{resultOfQuestion.userAnswers.text}}' is correct</p>
-        <div *ngIf="!resultOfQuestion.userAnswers.isCorrect">
-            <p style="color: red;">Your answer '{{resultOfQuestion.userAnswers.text}}' is wrong</p>
-            <p>Correct answer: '{{returnCorrectAnswer(resultOfQuestion.questionAndAnswers.answers).text}}'</p>
+<p>
+    {{ score.correctlyAnsweredQuestions }} out of {{ score.questionCount }} questions
+    answered correctly ({{score.correctlyAnsweredQuestions /
+    score.questionCount | percent}})
+</p>
+<div *ngFor="let result of userResults">
+    <p style="font-weight: bold;">{{ result.text}}</p>
+    <div *ngFor="let answer of result.answers">
+        <p *ngIf="answer.answeredCorrectly" style="color: green;">Your answer
+            '{{ answer.text }}' is correct</p>
+        <div *ngIf="!answer.answeredCorrectly">
+            <span style="color: red;"> {{ answer.text }}: You selected '{{ !!answer.checkedByUser }}' that is wrong. Correct answer was: '{{answer.isCorrect}}'</span>
         </div>
-        <hr>
     </div>
+    <hr>
 </div>

@@ -48,7 +48,7 @@ describe('Component: ScoreComponent', () => {
 
     describe('countCorrectAnswers()', () => {
         beforeEach(() => {
-            scoreComponent.userResults = DataMock.getUserResultOfQuestion();
+            scoreComponent.userResults = DataMock.getUserResultOfQuestionAllAnsweredCorrectly();
             fixture.detectChanges();
         });
         it('should count correct answer correctly when 2 questions are answered correctly', () => {

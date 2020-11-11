@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Questionnaire } from '../../models/questionnaire.model';
 import { DataMock } from '../../testing/data.mock';
-import { UserResult } from '../../models/userResult';
+import { QuestionAndAnswers } from '../../models/questionAndAnswers';
 
 @Component({
     selector: 'app-questionnaire',
@@ -11,7 +11,7 @@ import { UserResult } from '../../models/userResult';
 export class QuestionnaireComponent implements OnInit {
 
     @Input() questionnaires: Questionnaire[];
-    @Output() userResultSubmitted: EventEmitter<UserResult[]> = new EventEmitter();
+    @Output() userResultSubmitted: EventEmitter<QuestionAndAnswers[]> = new EventEmitter();
 
     selectedTopic: Questionnaire;
 

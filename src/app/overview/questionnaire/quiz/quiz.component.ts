@@ -1,7 +1,8 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Questionnaire } from '../../../models/questionnaire.model';
-import { FormBuilder, FormGroup } from '@angular/forms';
-import { UserResult } from '../../../models/userResult';
+import { FormArray, FormControl, FormGroup } from '@angular/forms';
+import { QuestionAndAnswers } from '../../../models/questionAndAnswers';
+import { FormToUserResultService } from '../../../services/form-to-user-result.service';
 
 @Component({
     selector: 'app-quiz',
@@ -11,31 +12,39 @@ import { UserResult } from '../../../models/userResult';
 export class QuizComponent implements OnInit {
 
     @Input() topic: Questionnaire;
-    @Output() submittedResult: EventEmitter<UserResult[]> = new EventEmitter();
+    @Output() submittedResult: EventEmitter<QuestionAndAnswers[]> = new EventEmitter();
 
     form: FormGroup;
 
-    constructor(private fb: FormBuilder) {
+    constructor(private formToUserResult: FormToUserResultService) {
     }
 
     ngOnInit() {
-        console.log(this.topic);
-        this.form = this.initForm();
-
-
+        this.form = this.initForm(this.topic.questionAndAnswers);
     }
 
     onSubmit() {
-        console.log(this.form);
-        this.submittedResult.emit([]);
+        this.submittedResult.emit(this.formToUserResult.mapFormToUserResult(this.form.controls[this.topic.topic].value, this.topic));
     }
 
-    private initForm(): FormGroup {
-        const rootForm = this.fb.group({
+    private initForm(questionAndAnswersArray: QuestionAndAnswers[]): FormGroup {
+        const rootForm = new FormGroup({});
+        const questionControls = [];
 
-        });
-
+        for (let i = 0; i < questionAndAnswersArray.length; i++) {
+            const currentQuestionAndAnswer = questionAndAnswersArray[i];
+            const answerFormControls = this.createNumberOfControlsAndPushIntoFormArray(currentQuestionAndAnswer.answers.length);
+            questionControls.push(answerFormControls);
+        }
+        rootForm.addControl(this.topic.topic, new FormArray(questionControls));
         return rootForm;
     }
 
+    private createNumberOfControlsAndPushIntoFormArray(number: number): FormArray {
+        const controls = [];
+        for (let i = 0; i < number; i++) {
+            controls.push(new FormControl());
+        }
+        return new FormArray(controls);
+    }
 }
