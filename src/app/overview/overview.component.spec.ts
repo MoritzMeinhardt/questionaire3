@@ -72,8 +72,6 @@ describe('Component: OverviewComponent', () => {
             const questionAndAnswers: QuestionAndAnswers = DataMock.getUserResultOfQuestion()[1].questionAndAnswers;
             overviewComponent.onUserFeedback(answer, questionAndAnswers);
             fixture.detectChanges();
-            console.log(overviewComponent.userResults);
-            console.log(expectedUserResult);
             expect(JSON.stringify(overviewComponent.userResults)).toEqual(JSON.stringify(expectedUserResult));
         });
     });
