@@ -1,13 +1,13 @@
-<div *ngIf="!viewResult">
-  <div  *ngFor="let question of questions">
-    <app-question [question]="question" (answerGiven)="onUserFeedback($event, question)"></app-question>
-    <hr style="margin-top: 1em;">
-  </div>
+<div *ngIf="!showScore">
+    <app-questionnaire
+        [questionnaires]="questionnaires"
+        (userResultSubmitted)="onUserResultSubmitted($event)"
+    ></app-questionnaire>
 </div>
 
-<div *ngIf="viewResult">
-  <app-score [userResults]="userResults"></app-score>
+<div *ngIf="showScore">
+  <app-score [score]="score"></app-score>
 </div>
 
-<button *ngIf="!viewResult" (click)="submit()" style="margin-top: 40px;">Show my Score...</button>
-<button *ngIf="viewResult" (click)="submit()" style="margin-top: 40px;">Try again</button>
+
+<button *ngIf="showScore" (click)="submit()" style="margin-top: 40px;">Try again</button>

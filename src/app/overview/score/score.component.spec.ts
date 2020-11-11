@@ -1,7 +1,7 @@
-import {ComponentFixture, TestBed} from '@angular/core/testing';
-import {ScoreComponent} from './score.component';
-import {Answer} from '../models/answer';
-import {DataMock} from '../testing/data.mock';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ScoreComponent } from './score.component';
+import { Answer } from '../../models/answer';
+import { DataMock } from '../../testing/data.mock';
 
 describe('Component: ScoreComponent', () => {
     let fixture: ComponentFixture<ScoreComponent>;

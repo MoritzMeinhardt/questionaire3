@@ -1,8 +1,12 @@
-import {Component, OnInit} from '@angular/core';
-import {QuestionProviderService} from '../services/question-provider.service';
-import {QuestionAndAnswers} from '../models/questionAndAnswers';
-import {UserResult} from '../models/userResult';
-import {Answer} from '../models/answer';
+import { Component, OnInit } from '@angular/core';
+import { QuestionProviderService } from '../services/question-provider.service';
+import { QuestionAndAnswers } from '../models/questionAndAnswers';
+import { UserResult } from '../models/userResult';
+import { Answer } from '../models/answer';
+import { FormGroup } from '@angular/forms';
+import { Questionnaire } from '../models/questionnaire.model';
+import { ScoreCalculationService } from '../services/score-calculation.service';
+import { Score } from '../models/score.model';
 
 @Component({
     selector: 'app-overview',
@@ -11,16 +15,20 @@ import {Answer} from '../models/answer';
 })
 export class OverviewComponent implements OnInit {
 
-    viewResult = false;
-    questions: QuestionAndAnswers[];
+    public showScore = false;
+    public score: Score;
+    public questionnaires: Questionnaire[];
     userResults: UserResult[] = [];
 
+    form = new FormGroup({});
+
     constructor(
-        private questionProvider: QuestionProviderService
+        private questionProvider: QuestionProviderService,
+        private scoreCalculationService: ScoreCalculationService,
     ) {}
 
     ngOnInit() {
-        this.questions = this.questionProvider.getQuestions();
+        // this.questionnaires = this.questionProvider.getQuestions());
     }
 
     onUserFeedback(answer: Answer, question: QuestionAndAnswers) {
@@ -34,7 +42,7 @@ export class OverviewComponent implements OnInit {
     }
 
     private createNewUserResultOfQuestion(answer: Answer, question: QuestionAndAnswers) {
-        return new UserResult(question, answer);
+        return new UserResult(question, [answer]);
     }
 
     private getQuestionIndex(question: QuestionAndAnswers): number {
@@ -50,7 +58,10 @@ export class OverviewComponent implements OnInit {
     }
 
     submit() {
-        this.viewResult = !this.viewResult;
+        this.showScore = !this.showScore;
     }
 
+    onUserResultSubmitted(userResult: UserResult[]) {
+        this.score = this.scoreCalculationService.calculateScore(userResult);
+    }
 }

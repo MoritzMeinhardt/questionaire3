@@ -1,12 +1,12 @@
-import {ComponentFixture, TestBed} from '@angular/core/testing';
-import {OverviewComponent} from './overview.component';
-import {QuestionProviderService} from '../services/question-provider.service';
-import {QuestionComponent} from '../question/question.component';
-import {ScoreComponent} from '../score/score.component';
-import {DataMock} from '../testing/data.mock';
-import {UserResult} from '../models/userResult';
-import {Answer} from '../models/answer';
-import {QuestionAndAnswers} from '../models/questionAndAnswers';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { OverviewComponent } from './overview.component';
+import { QuestionProviderService } from '../services/question-provider.service';
+import { QuestionComponent } from '../question/question.component';
+import { ScoreComponent } from './score/score.component';
+import { DataMock } from '../testing/data.mock';
+import { UserResult } from '../models/userResult';
+import { Answer } from '../models/answer';
+import { QuestionAndAnswers } from '../models/questionAndAnswers';
 
 describe('Component: OverviewComponent', () => {
     let fixture: ComponentFixture<OverviewComponent>;

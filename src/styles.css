@@ -1,1 +1,15 @@
-/* You can add global styles to this file, and also import other style files */
+.width-80 {
+    width: 80%;
+}
+
+.m-10px {
+    margin: 10px;
+}
+
+.d-flex {
+    display: flex;
+}
+
+.justify-content-center {
+    justify-content: center;
+}

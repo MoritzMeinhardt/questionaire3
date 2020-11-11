@@ -1,6 +1,0 @@
-<p>{{question.text}}</p>
-
-<div *ngFor="let answer of question.answers">
-  <input class="form-check-input" [name]="question.text" type="radio" value="" [id]="question.text + answer.text" (click)="onSelect(answer)">
-  <label class="form-check-label" [for]="question.text + answer.text">{{ answer.text }} </label>
-</div>
