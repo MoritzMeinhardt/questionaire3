@@ -2,11 +2,11 @@ import {Answer} from './answer';
 import {QuestionAndAnswers} from './questionAndAnswers';
 
 export class UserResultOfQuestion {
-    question: QuestionAndAnswers;
+    questionAndAnswers: QuestionAndAnswers;
     userAnswer: Answer;
 
     constructor(question: QuestionAndAnswers, userAnswer: Answer) {
-        this.question = question;
+        this.questionAndAnswers = question;
         this.userAnswer = userAnswer;
     }
 }

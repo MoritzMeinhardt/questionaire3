@@ -17,8 +17,7 @@ export class OverviewComponent implements OnInit {
 
     constructor(
         private questionProvider: QuestionProviderService
-    ) {
-    }
+    ) {}
 
     ngOnInit() {
         this.questions = this.questionProvider.getQuestions();
@@ -39,11 +38,11 @@ export class OverviewComponent implements OnInit {
     }
 
     private getQuestionIndex(question: QuestionAndAnswers): number {
-        return this.userResults.findIndex(entry => entry.question === question);
+        return this.userResults.findIndex(entry =>  entry.questionAndAnswers === question);
     }
 
     private isQuestionAlreadyAnswered(question: QuestionAndAnswers): boolean {
-        return this.userResults.find(entry => entry.question === question) !== undefined;
+        return this.userResults.find(entry => entry.questionAndAnswers === question) !== undefined;
     }
 
     private removeAlreadyAnsweredQuestion(questionIndex: number) {

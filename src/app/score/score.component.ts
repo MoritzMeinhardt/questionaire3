@@ -12,9 +12,6 @@ export class ScoreComponent implements OnInit {
     @Input() userResults: UserResultOfQuestion[];
     public score = 0;
 
-    constructor() {
-    }
-
     ngOnInit() {
         this.score = this.countCorrectAnswers(this.userResults);
     }
@@ -23,7 +20,7 @@ export class ScoreComponent implements OnInit {
         return userResults.filter(entry => entry.userAnswer.isCorrect).length;
     }
 
-    returnCorrectAnswer(answers: Answer[]) {
+    returnCorrectAnswer(answers: Answer[]): Answer {
         return answers.find(answer => answer.isCorrect);
     }
 }

@@ -1,7 +1,7 @@
 import {TestBed} from '@angular/core/testing';
 import {QuestionProviderService} from './question-provider.service';
 import {QuestionAndAnswers} from '../models/questionAndAnswers';
-import {DEFAULT_ANSWER} from '../constants/question.constant';
+import {DataMock} from '../testing/data.mock';
 
 describe('QuestionProviderService', () => {
     let questionProviderService: QuestionProviderService;
@@ -17,49 +17,8 @@ describe('QuestionProviderService', () => {
         const actualQuestionnaire: QuestionAndAnswers[] = questionProviderService.getQuestions();
         expect(JSON.stringify(actualQuestionnaire)).toEqual(JSON.stringify(expectedQuestionnaire));
     });
-
-    describe('', () => {
-        // TODO: Implement
-    });
 });
 
 function getExpectedQuestionAndAnswers(): QuestionAndAnswers[] {
-    return [
-        {
-            answers: [
-                {
-                    text: 'Ant',
-                    isCorrect: false,
-                },
-                {
-                    text: 'Bee',
-                    isCorrect: false,
-                },
-                {
-                    text: 'Cat',
-                    isCorrect: true,
-                },
-                DEFAULT_ANSWER
-            ],
-            text: 'Which of these animals is a mammal?',
-        },
-        {
-            answers: [
-                {
-                    text: '2',
-                    isCorrect: false,
-                },
-                {
-                    text: '5',
-                    isCorrect: true,
-                },
-                {
-                    text: '6',
-                    isCorrect: false,
-                },
-                DEFAULT_ANSWER
-            ],
-            text: 'What is the sum of 2+3?',
-        },
-    ];
+    return DataMock.getQuestionAndAnswers();
 }

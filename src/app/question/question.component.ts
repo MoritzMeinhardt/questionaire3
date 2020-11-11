@@ -1,24 +1,19 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { QuestionAndAnswers } from "../models/questionAndAnswers";
-import { Answer } from "../models/answer";
+import {Component, EventEmitter, Input, Output} from '@angular/core';
+import {QuestionAndAnswers} from '../models/questionAndAnswers';
+import {Answer} from '../models/answer';
 
 @Component({
-  selector: 'app-question',
-  templateUrl: './question.component.html',
-  styleUrls: ['./question.component.css']
+    selector: 'app-question',
+    templateUrl: './question.component.html',
+    styleUrls: ['./question.component.css']
 })
-export class QuestionComponent implements OnInit {
+export class QuestionComponent {
 
-  @Input() question: QuestionAndAnswers;
-  @Output() answerGiven: EventEmitter<Answer> = new EventEmitter();
+    @Input() question: QuestionAndAnswers;
+    @Output() answerGiven: EventEmitter<Answer> = new EventEmitter();
 
-  constructor() { }
-
-  ngOnInit() {
-  }
-
-  onSelect(answer) {
-    this.answerGiven.emit(answer);
-  }
+    onSelect(answer) {
+        this.answerGiven.emit(answer);
+    }
 
 }
