@@ -42,7 +42,7 @@ export class OverviewComponent implements OnInit {
     }
 
     private isQuestionAlreadyAnswered(question: QuestionAndAnswers): boolean {
-        return this.userResults.find(entry => entry.questionAndAnswers === question) !== undefined;
+        return this.userResults.find(entry => JSON.stringify(entry.questionAndAnswers) === JSON.stringify(question)) !== undefined;
     }
 
     private removeAlreadyAnsweredQuestion(questionIndex: number) {
