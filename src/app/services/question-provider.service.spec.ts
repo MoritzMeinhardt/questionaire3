@@ -1,40 +1,65 @@
 import {TestBed} from '@angular/core/testing';
 import {QuestionProviderService} from './question-provider.service';
 import {QuestionAndAnswers} from '../models/questionAndAnswers';
-import {Answer} from '../models/answer';
+import {DEFAULT_ANSWER} from '../constants/question.constant';
 
 describe('QuestionProviderService', () => {
+    let questionProviderService: QuestionProviderService;
+
     beforeEach(() => TestBed.configureTestingModule({}));
 
-    it('should create correct QUESTIONS', () => { // TODO encapsulate test input data from real input data
-        const service: QuestionProviderService = TestBed.get(QuestionProviderService);
-        const q1 = new QuestionAndAnswers();
-        const q1a1 = new Answer();
-        const q1a2 = new Answer();
-        const q1a3 = new Answer();
-        const q2 = new QuestionAndAnswers();
-        const q2a1 = new Answer();
-        const q2a2 = new Answer();
-        const q2a3 = new Answer();
+    beforeEach(() => {
+       questionProviderService = TestBed.get(QuestionProviderService) ;
+    });
 
-        q1.text = 'Which of these animals is a mammal';
-        q1a1.text = 'Ant';
-        q1a2.text = 'Bee';
-        q1a3.text = 'Cat';
-        q1a3.isCorrect = true;
-        q1.answers = [q1a1, q1a2, q1a3];
-
-        q2.text = 'What is the sum of 2+3';
-        q2a1.text = '2';
-        q2a2.text = '5';
-        q2a2.isCorrect = true;
-        q2a3.text = '6';
-        q2.answers = [q2a1, q2a2, q2a3];
-
-        expect(service.getQuestions()).toEqual([q1, q2]);
+    it('should create correct QUESTIONS', () => {
+        const expectedQuestionnaire: QuestionAndAnswers[] = getExpectedQuestionAndAnswers();
+        const actualQuestionnaire: QuestionAndAnswers[] = questionProviderService.getQuestions();
+        expect(actualQuestionnaire).toEqual(expectedQuestionnaire);
     });
 
     describe('', () => {
         // TODO: Implement
     });
 });
+
+function getExpectedQuestionAndAnswers(): QuestionAndAnswers[] {
+    return [
+        {
+            text: 'Which of these animals is a mammal?',
+            answers: [
+                {
+                    text: 'Ant',
+                    isCorrect: false,
+                },
+                {
+                    text: 'Bee',
+                    isCorrect: false,
+                },
+                {
+                    text: 'Cat',
+                    isCorrect: true,
+                },
+                DEFAULT_ANSWER
+            ],
+        },
+        {
+            text: 'What is the sum of 2+3?',
+            answers: [
+                {
+                    text: '2',
+                    isCorrect: false,
+                },
+                {
+                    text: '5',
+                    isCorrect: true,
+                },
+                {
+                    text: '6',
+                    isCorrect: false,
+                },
+                DEFAULT_ANSWER
+            ],
+        },
+    ];
+}

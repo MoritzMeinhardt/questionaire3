@@ -123,7 +123,7 @@ export class QuestionProviderService {
     }
 
     private setQuestionText(currentQuestionAndAnswers: QuestionAndAnswers, questionText: string) {
-        currentQuestionAndAnswers.text = questionText;
+        currentQuestionAndAnswers.text = questionText + '?';
     }
 
     private splitTextIntoLines(text: string): string[] {

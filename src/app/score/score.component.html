@@ -5,7 +5,7 @@
     <p *ngIf="resultOfQuestion.userAnswer.isCorrect" style="color: green;">Your answer '{{resultOfQuestion.userAnswer.text}}' is correct</p>
     <div *ngIf="!resultOfQuestion.userAnswer.isCorrect">
       <p style="color: red;">Your answer '{{resultOfQuestion.userAnswer.text}}' is wrong</p>
-      <p>Correct answer: '{{returnCorrectAnswet(resultOfQuestion.question.answers).text}}'</p>
+      <p>Correct answer: '{{returnCorrectAnswer(resultOfQuestion.question.answers).text}}'</p>
     </div>
     <hr>
   </div>
