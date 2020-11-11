@@ -20,6 +20,23 @@ export class QuestionProviderService {
         return this.getQuestionnaire(questionAndAnswerBlocks);
     }
 
+    private splitTextIntoLines(text: string): string[] {
+        return text.split(/\r?\n/);
+    }
+
+    private getQuestionAndAnswerBlocks(splittedText: string[]): string[][] {
+        const questionAndAnswerBlocks: string[][] = [];
+        let currentQuestionNumber = -1;
+        splittedText.forEach(lineOfText => {
+            if (this.isLineOfTextQuestion(lineOfText)) {
+                questionAndAnswerBlocks.push([]);
+                currentQuestionNumber++;
+            }
+            questionAndAnswerBlocks[currentQuestionNumber].push(lineOfText);
+        });
+        return questionAndAnswerBlocks;
+    }
+
     private getQuestionnaire(questionAndAnswerBlocks: string [][]): QuestionAndAnswers[] {
         const questionnaire: QuestionAndAnswers [] = [];
         questionAndAnswerBlocks.forEach(qAndABlock => {
@@ -89,35 +106,6 @@ export class QuestionProviderService {
         return alternativeAnswers;
     }
 
-    private createQuestions(splittedText: string[]) {
-        const questionnaire: QuestionAndAnswers [] = [];
-        let currentQuestionAndAnswers: QuestionAndAnswers = null;
-        splittedText.forEach(lineOfText => {
-            if (this.isLineOfTextQuestion(lineOfText)) {
-                if (currentQuestionAndAnswers) {
-                    currentQuestionAndAnswers.answers.push(DEFAULT_ANSWER);
-                    questionnaire.push(currentQuestionAndAnswers);
-                    currentQuestionAndAnswers = null;
-                }
-                currentQuestionAndAnswers = new QuestionAndAnswers();
-                currentQuestionAndAnswers.text = lineOfText.substring(1);
-            } else {
-                const answer: Answer = new Answer('');
-                if (this.isLineOfTextCorrectAnswer(lineOfText)) {
-                    answer.isCorrect = true;
-                    lineOfText = lineOfText.substring(1);
-                }
-                answer.text = lineOfText;
-                currentQuestionAndAnswers.answers.push(answer);
-            }
-        });
-        if (currentQuestionAndAnswers) {
-            currentQuestionAndAnswers.answers.push(DEFAULT_ANSWER);
-            questionnaire.push(currentQuestionAndAnswers);
-        }
-        return questionnaire;
-    }
-
     private getSubString(textBlock: string, index: number) {
         return textBlock.substring(index);
     }
@@ -126,29 +114,8 @@ export class QuestionProviderService {
         currentQuestionAndAnswers.text = questionText + '?';
     }
 
-    private splitTextIntoLines(text: string): string[] {
-        return text.split(/\r?\n/);
-    }
-
-    private getQuestionAndAnswerBlocks(splittedText: string[]): string[][] {
-        const questionAndAnswerBlocks: string[][] = [];
-        let currentQuestionNumber = -1;
-        splittedText.forEach(lineOfText => {
-            if (this.isLineOfTextQuestion(lineOfText)) {
-                questionAndAnswerBlocks.push([]);
-                currentQuestionNumber++;
-            }
-            questionAndAnswerBlocks[currentQuestionNumber].push(lineOfText);
-        });
-        return questionAndAnswerBlocks;
-    }
-
     private isLineOfTextQuestion(lineOfText: string): boolean {
         return this.doesLineStartWithCharacter(lineOfText, this.QUESTION_SELECTOR);
-    }
-
-    private isLineOfTextCorrectAnswer(lineOfText: string): boolean {
-        return this.doesLineStartWithCharacter(lineOfText, this.CORRECT_ANSWER_SELECTOR);
     }
 
     private doesLineStartWithCharacter(lineOfText: string, dividingCharacter: string) {
