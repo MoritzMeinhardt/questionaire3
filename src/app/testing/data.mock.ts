@@ -48,17 +48,25 @@ export class DataMock {
         return [
             {
                 questionAndAnswers: this.getQuestionAndAnswers()[0],
-                userAnswers: {
-                    text: 'Cat',
-                    isCorrect: true,
-                }
+                userAnswers: [
+                    {
+                        text: 'Cat',
+                        isCorrect: true,
+                    },
+                    {
+                        text: 'Dog',
+                        isCorrect: true,
+                    },
+                ]
             },
             {
                 questionAndAnswers: this.getQuestionAndAnswers()[1],
-                userAnswers: {
-                    text: '5',
-                    isCorrect: true,
-                },
+                userAnswers: [
+                    {
+                        text: '5',
+                        isCorrect: true,
+                    }
+                ]
             }
         ];
     }
