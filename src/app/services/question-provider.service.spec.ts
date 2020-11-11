@@ -15,7 +15,7 @@ describe('QuestionProviderService', () => {
     it('should create correct QUESTIONS', () => {
         const expectedQuestionnaire: QuestionAndAnswers[] = getExpectedQuestionAndAnswers();
         const actualQuestionnaire: QuestionAndAnswers[] = questionProviderService.getQuestions();
-        expect(actualQuestionnaire).toEqual(expectedQuestionnaire);
+        expect(JSON.stringify(actualQuestionnaire)).toEqual(JSON.stringify(expectedQuestionnaire));
     });
 
     describe('', () => {
