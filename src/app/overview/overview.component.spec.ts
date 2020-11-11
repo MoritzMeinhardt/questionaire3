@@ -46,7 +46,7 @@ describe('Component: OverviewComponent', () => {
     describe('onUserFeedback()', () => {
         it('should update userResults correctly when user answered first question', () => {
             const expectedUserResult: UserResultOfQuestion[] = [DataMock.getUserResultOfQuestion()[0]];
-            const answer: Answer = DataMock.getUserResultOfQuestion()[0].userAnswer;
+            const answer: Answer = DataMock.getUserResultOfQuestion()[0].userAnswers;
             const questionAndAnswers: QuestionAndAnswers = DataMock.getUserResultOfQuestion()[0].questionAndAnswers;
             overviewComponent.onUserFeedback(answer, questionAndAnswers);
             fixture.detectChanges();
@@ -56,7 +56,7 @@ describe('Component: OverviewComponent', () => {
         it('should update userResults correctly when user answered second question', () => {
             overviewComponent.userResults.push(DataMock.getUserResultOfQuestion()[0]);
             const expectedUserResult: UserResultOfQuestion[] = DataMock.getUserResultOfQuestion();
-            const answer: Answer = DataMock.getUserResultOfQuestion()[1].userAnswer;
+            const answer: Answer = DataMock.getUserResultOfQuestion()[1].userAnswers;
             const questionAndAnswers: QuestionAndAnswers = DataMock.getUserResultOfQuestion()[1].questionAndAnswers;
             overviewComponent.onUserFeedback(answer, questionAndAnswers);
             fixture.detectChanges();
@@ -66,7 +66,7 @@ describe('Component: OverviewComponent', () => {
         it('should update userResults correctly when user answered second question twice', () => {
             overviewComponent.userResults.push(...DataMock.getUserResultOfQuestion());
             const expectedUserResult: UserResultOfQuestion[] = DataMock.getUserResultOfQuestion();
-            expectedUserResult[1].userAnswer = getCatAnswer();
+            expectedUserResult[1].userAnswers = getCatAnswer();
             fixture.detectChanges();
             const answer: Answer = getCatAnswer();
             const questionAndAnswers: QuestionAndAnswers = DataMock.getUserResultOfQuestion()[1].questionAndAnswers;

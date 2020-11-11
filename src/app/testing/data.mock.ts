@@ -48,14 +48,14 @@ export class DataMock {
         return [
             {
                 questionAndAnswers: this.getQuestionAndAnswers()[0],
-                userAnswer: {
+                userAnswers: {
                     text: 'Cat',
                     isCorrect: true,
                 }
             },
             {
                 questionAndAnswers: this.getQuestionAndAnswers()[1],
-                userAnswer: {
+                userAnswers: {
                     text: '5',
                     isCorrect: true,
                 },

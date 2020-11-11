@@ -58,7 +58,7 @@ describe('Component: ScoreComponent', () => {
         });
 
         it('should count correct answer correctly when 1 question is answered correctly', () => {
-            scoreComponent.userResults[0].userAnswer = {
+            scoreComponent.userResults[0].userAnswers = {
                 text: 'Ant',
                 isCorrect: false,
             };
@@ -68,11 +68,11 @@ describe('Component: ScoreComponent', () => {
         });
 
         it('should count correct answer correctly when no questions are answered correctly', () => {
-            scoreComponent.userResults[0].userAnswer = {
+            scoreComponent.userResults[0].userAnswers = {
                 text: 'Ant',
                 isCorrect: false,
             };
-            scoreComponent.userResults[1].userAnswer = {
+            scoreComponent.userResults[1].userAnswers = {
                 text: '2',
                 isCorrect: false,
             };

@@ -4,10 +4,10 @@ userResults.length
 <div *ngFor="let resultOfQuestion of userResults">
     <div>
         <p style="font-weight: bold;">{{resultOfQuestion.questionAndAnswers.text}}</p>
-        <p *ngIf="resultOfQuestion.userAnswer.isCorrect" style="color: green;">Your answer
-            '{{resultOfQuestion.userAnswer.text}}' is correct</p>
-        <div *ngIf="!resultOfQuestion.userAnswer.isCorrect">
-            <p style="color: red;">Your answer '{{resultOfQuestion.userAnswer.text}}' is wrong</p>
+        <p *ngIf="resultOfQuestion.userAnswers.isCorrect" style="color: green;">Your answer
+            '{{resultOfQuestion.userAnswers.text}}' is correct</p>
+        <div *ngIf="!resultOfQuestion.userAnswers.isCorrect">
+            <p style="color: red;">Your answer '{{resultOfQuestion.userAnswers.text}}' is wrong</p>
             <p>Correct answer: '{{returnCorrectAnswer(resultOfQuestion.questionAndAnswers.answers).text}}'</p>
         </div>
         <hr>

@@ -3,10 +3,10 @@ import {QuestionAndAnswers} from './questionAndAnswers';
 
 export class UserResultOfQuestion {
     questionAndAnswers: QuestionAndAnswers;
-    userAnswer: Answer;
+    userAnswers: Answer[];
 
-    constructor(question: QuestionAndAnswers, userAnswer: Answer) {
+    constructor(question: QuestionAndAnswers, userAnswers: Answer[]) {
         this.questionAndAnswers = question;
-        this.userAnswer = userAnswer;
+        this.userAnswers = userAnswers;
     }
 }

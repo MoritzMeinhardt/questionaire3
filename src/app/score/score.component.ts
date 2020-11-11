@@ -17,7 +17,7 @@ export class ScoreComponent implements OnInit {
     }
 
     private countCorrectAnswers(userResults: UserResultOfQuestion[]): number {
-        return userResults.filter(entry => entry.userAnswer.isCorrect).length;
+        return userResults.filter(entry => entry.userAnswers.isCorrect).length;
     }
 
     returnCorrectAnswer(answers: Answer[]): Answer {
