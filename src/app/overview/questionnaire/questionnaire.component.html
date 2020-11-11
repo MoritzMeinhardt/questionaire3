@@ -1,0 +1,12 @@
+<app-choose-topic
+    *ngIf="!selectedTopic"
+    [selectionOfTopics]="questionnaires"
+    (selectedTopic)="onTopicSelected($event)"
+></app-choose-topic>
+
+<app-quiz
+    *ngIf="selectedTopic"
+    [topic]="selectedTopic"
+    (submittedResult)="userResultSubmitted.emit($event)"
+>
+</app-quiz>

@@ -1,0 +1,12 @@
+<h1> {{ topic.topic }} </h1>
+
+<form [formGroup]="form" (submit)="onSubmit()">
+    <div *ngFor="let question of topic.questionAndAnswers;">
+        <h3> {{question.text}} </h3>
+        <div *ngFor="let answer of question.answers; let i = index;">
+            <input type="checkbox" [id]="question.text + i">
+            <label [for]="question.text + i"> {{ answer.text }} </label>
+        </div>
+    </div>
+    <button type="submit">Submit</button>
+</form>
