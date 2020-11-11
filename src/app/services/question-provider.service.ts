@@ -80,7 +80,9 @@ export class QuestionProviderService {
 
     private getAlternativeAnswers(questionAndAnswerBlock: string []): Answer[] {
         const alternativeAnswers: Answer[] = [];
-        const alternativeAnswerTexts = questionAndAnswerBlock.filter(entry => !entry.startsWith(this.CORRECT_ANSWER_SELECTOR));
+        const alternativeAnswerTexts = questionAndAnswerBlock.filter(entry => {
+            return !entry.startsWith(this.CORRECT_ANSWER_SELECTOR) && !entry.startsWith(this.QUESTION_SELECTOR);
+        });
         alternativeAnswerTexts.forEach(answerText => {
             alternativeAnswers.push(new Answer(answerText));
         });
@@ -133,6 +135,7 @@ export class QuestionProviderService {
         let currentQuestionNumber = -1;
         splittedText.forEach(lineOfText => {
             if (this.isLineOfTextQuestion(lineOfText)) {
+                questionAndAnswerBlocks.push([]);
                 currentQuestionNumber++;
             }
             questionAndAnswerBlocks[currentQuestionNumber].push(lineOfText);
